@@ -260,7 +260,7 @@ if __name__ == '__main__':
 
                         elif operacija == '2':
                             print("BRISANJE [2]")
-                            n = int(input("Unesite naziv apoteke koju zelite obrisati iz baze: "))
+                            n = input("Unesite naziv apoteke koju zelite obrisati iz baze: ")
                             apoteka.delete_apoteka(n)  # delete apoteke
 
                         elif operacija == '3':
