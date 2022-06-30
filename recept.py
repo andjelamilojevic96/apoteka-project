@@ -40,7 +40,7 @@ def create_recept(conn, recept):
 
 
 def delete_recept(broj):
-    conn = sqlite3.connect('recepti.db')
+    conn = sqlite3.connect('apoteke.db')
     cursor = conn.cursor()
 
     cursor.execute("DELETE FROM recepti WHERE brojrecepta = (?)", (broj,))
@@ -50,7 +50,7 @@ def delete_recept(broj):
 
 
 def update_recept(lijek1, broj):
-    conn = sqlite3.connect('recepti.db')
+    conn = sqlite3.connect('apoteke.db')
     cursor = conn.cursor()
 
     cursor.execute("UPDATE recepti SET lijek = (?) WHERE brojrecepta = (?)", (lijek1, broj))
