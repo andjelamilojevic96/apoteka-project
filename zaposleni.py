@@ -18,7 +18,7 @@ class Zaposleni:
         else:
             self.zvanje = ' '
         email = input("Email (ime.prezime): ")
-        self.email = email + '@gmai.com'
+        self.email = email + '@gmail.com'
         self.plata = float(input("Plata: "))
 
     def __str__(self):
@@ -44,7 +44,7 @@ def create_zaposleni(conn, zaposleni):
 
 
 def delete_zaposleni(idzaposlenog):
-    conn = sqlite3.connect('zaposleni.db')
+    conn = sqlite3.connect('apoteke.db')
     cursor = conn.cursor()
     cursor.execute("DELETE FROM zaposleni WHERE id = (?)", (idzaposlenog,))
 
@@ -53,7 +53,7 @@ def delete_zaposleni(idzaposlenog):
 
 
 def update_plata(novaplata, staraplata):
-    conn = sqlite3.connect('zaposleni.db')
+    conn = sqlite3.connect('apoteke.db')
 
     cursor = conn.cursor()
     cursor.execute("UPDATE zaposleni SET plata = (?) WHERE plata = (?)", (novaplata, staraplata))
