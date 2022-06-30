@@ -64,7 +64,7 @@ if __name__ == '__main__':
                                                                cijenabezpdv FLOAT, 
                                                                datum DATE
                                                            ); """
-                            conn = create_connection("apoteke.db")  # create connection to lijekovi.db
+                            conn = create_connection("apoteke.db")  # create connection to apoteke.db
                             if conn is not None:
                                 create_table(conn, sql_create_lijekovi_table)  # create table lijekovi
                                 tabela = 'lijekovi'
@@ -95,7 +95,7 @@ if __name__ == '__main__':
                                     lista = lijek.create_listalijekovazaotpis(duzina_liste)
                                     conn.executemany("""INSERT INTO lijekovizaotpis
                                     (id, naziv, kolicina, cijenasapdv, cijenabezpdv, datum) 
-                                    VALUES(?,?,?,?,?,?)""", lista)  # insert lista to lijekovizaotpis.db
+                                    VALUES(?,?,?,?,?,?)""", lista)  # insert lista to lijekovizaotpis
                                     conn.commit()
                                     conn.close()
 
@@ -123,10 +123,10 @@ if __name__ == '__main__':
                             tabela2 = 'lijekovizaotpis'
                             print("TABELA LIJEKOVA: ")
                             print("ID - Naziv - Kolicina - Cijena(PDV) - Cijena - Datum")
-                            select.show_all(baza, tabela1)  # select all from lijekovi.db
+                            select.show_all(baza, tabela1)  # select all from lijekovi table
                             print("TABELA LIJEKOVA ZA OTPIS: ")
                             print("ID - Naziv - Kolicina - Cijena(PDV) - Cijena - Datum")
-                            select.show_all(baza, tabela2)  # select all from lijekovizaotpis.db
+                            select.show_all(baza, tabela2)  # select all from lijekovizaotpis table
                         elif operacija != '0':
                             print("Nepoznata komanda!")
                     print("IZLAZ IZ TABELE PODATAKA LIJEKOVA")
@@ -146,7 +146,7 @@ if __name__ == '__main__':
                                                                                         datumizdavanja DATE, 
                                                                                         nacinupotrebe VARCHAR(50)
                                                                                        ); """
-                            conn = create_connection("apoteke.db")  # create connection to recepti.db
+                            conn = create_connection("apoteke.db")  # create connection to apoteke.db
                             if conn is not None:
                                 create_table(conn, sql_create_recepti_table)
                                 recept1 = recept.Recept()
@@ -202,7 +202,7 @@ if __name__ == '__main__':
                                                                                         email VARCHAR(50), 
                                                                                         plata FLOAT
                                                                                         ); """
-                            conn = create_connection("apoteke.db")  # create connection to zaposleni.db
+                            conn = create_connection("apoteke.db")  # create connection to apoteke.db
 
                             if conn is not None:
                                 create_table(conn, sql_create_zaposleni_table)  # create table zaposleni
