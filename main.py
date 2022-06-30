@@ -48,7 +48,7 @@ if __name__ == '__main__':
             pristup = ''
 
             while pristup != '0':
-                pristup = input("Unesite komandu za pristup tabeli: ")
+                pristup = input("Unesite komandu za pristup tabeli LIJEKOVI [1] i RECEPTI [2]. IZLAZ[0]: ")
                 if pristup == '1':
                     print("---TABELA PODATAKA LIJEKOVI---")
                     operacija = ''
@@ -69,38 +69,10 @@ if __name__ == '__main__':
                                 create_table(conn, sql_create_lijekovi_table)  # create table lijekovi
                                 tabela = 'lijekovi'
                                 lijek1 = lijek.Lijek()
-                                b = lijek.create_lijek(conn, lijek1, tabela)  # create a new record lijek in table
+                                b = lijek.create_lijek(conn, lijek1, tabela)  # create a new record lijek1 in table
                                 conn.close()
                             else:
                                 print("Error!")
-
-                            duzina_liste = len(lijek.Lijek.ListaZaOtpis)
-                            if duzina_liste > 0:
-                                sql_create_lijekovizaotpis_table = """ CREATE TABLE IF NOT EXISTS lijekovizaotpis(
-                                                                                               id INTEGER PRIMARY KEY, 
-                                                                                               naziv VARCHAR(30), 
-                                                                                               kolicina INTEGER, 
-                                                                                               cijenasapdv FLOAT, 
-                                                                                               cijenabezpdv FLOAT, 
-                                                                                               datum DATE
-                                                                                               ); """
-                                # create a connection to lijekovi
-                                conn = create_connection("apoteke.db")
-
-                                if conn is not None:
-                                    # create a table lijekovizaotpis
-                                    create_table(conn, sql_create_lijekovizaotpis_table)
-                                    tabela = 'lijekovizaotpis'
-                                    # create a list of tuples from lista
-                                    lista = lijek.create_listalijekovazaotpis(duzina_liste)
-                                    conn.executemany("""INSERT INTO lijekovizaotpis
-                                    (id, naziv, kolicina, cijenasapdv, cijenabezpdv, datum) 
-                                    VALUES(?,?,?,?,?,?)""", lista)  # insert lista to lijekovizaotpis
-                                    conn.commit()
-                                    conn.close()
-
-                            else:
-                                print("Lista za otpis lijekova je prazna!")
 
                         elif operacija == '2':
                             print("BRISANJE [2]")
@@ -129,6 +101,35 @@ if __name__ == '__main__':
                             select.show_all(baza, tabela2)  # select all from lijekovizaotpis table
                         elif operacija != '0':
                             print("Nepoznata komanda!")
+                    duzina_liste = len(lijek.Lijek.ListaZaOtpis)
+                    if duzina_liste > 0:
+                        sql_create_lijekovizaotpis_table = """ CREATE TABLE IF NOT EXISTS lijekovizaotpis(
+                                                                                                id INTEGER PRIMARY KEY, 
+                                                                                                naziv VARCHAR(30), 
+                                                                                                kolicina INTEGER, 
+                                                                                                cijenasapdv FLOAT, 
+                                                                                                cijenabezpdv FLOAT, 
+                                                                                                datum DATE
+                                                                                                ); """
+                        # create a connection to apoteka.db
+                        conn = create_connection("apoteke.db")
+
+                        if conn is not None:
+                            # create a table lijekovizaotpis
+                            create_table(conn, sql_create_lijekovizaotpis_table)
+                            tabela = 'lijekovizaotpis'
+                            # create a list of tuples from lista
+                            lista = lijek.create_listalijekovazaotpis(duzina_liste)
+                            conn.executemany("""INSERT INTO lijekovizaotpis
+                                                        (id, naziv, kolicina, cijenasapdv, cijenabezpdv, datum) 
+                                                        VALUES(?,?,?,?,?,?)""",
+                                             lista)  # insert lista to lijekovizaotpis table
+                            conn.commit()
+                            conn.close()
+
+                    else:
+                        print("Lista za otpis lijekova je prazna!")
+                        continue
                     print("IZLAZ IZ TABELE PODATAKA LIJEKOVA")
 
                 elif pristup == '2':
@@ -148,9 +149,9 @@ if __name__ == '__main__':
                                                                                        ); """
                             conn = create_connection("apoteke.db")  # create connection to apoteke.db
                             if conn is not None:
-                                create_table(conn, sql_create_recepti_table)
+                                create_table(conn, sql_create_recepti_table)  # create table recepti
                                 recept1 = recept.Recept()
-                                r = recept.create_recept(conn, recept1)
+                                r = recept.create_recept(conn, recept1)  # create a new record recept1 in table recepti
                                 conn.close()
                             else:
                                 print("Error!")
@@ -163,7 +164,8 @@ if __name__ == '__main__':
                         elif operacija == '3':
                             print("IZMJENA [3]")
                             brojrecepta = int(input("Unesite broj recepta na kojem zelite izmjeniti naziv lijeka: "))
-                            lijek = input("Novi lijek: ")
+                            lijek1 = input("Novi lijek: ")
+                            lijek = lijek1.upper()
                             recept.update_recept(lijek, brojrecepta)  # update recept
 
                         elif operacija == '4':
@@ -207,6 +209,7 @@ if __name__ == '__main__':
                             if conn is not None:
                                 create_table(conn, sql_create_zaposleni_table)  # create table zaposleni
                                 zaposleni1 = zaposleni.Zaposleni()  # create zaposleni
+                                # create a new record zaposleni1 in table
                                 b = zaposleni.create_zaposleni(conn, zaposleni1)
                                 conn.close()
                             else:
