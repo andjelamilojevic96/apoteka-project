@@ -44,13 +44,13 @@ if __name__ == '__main__':
 
         if ulaz == '1':
             print("Prijavljeni ste kao FARMACEUT")
-            print("Imate pristup bazama podataka LIJEKOVI [1] i RECEPTI [2]. IZLAZ[0]: ")
+            print("Imate pristup tabelama podataka LIJEKOVI [1] i RECEPTI [2]. IZLAZ[0]: ")
             pristup = ''
 
             while pristup != '0':
-                pristup = input("Unesite komandu za pristup bazi: ")
+                pristup = input("Unesite komandu za pristup tabeli: ")
                 if pristup == '1':
-                    print("---BAZA PODATAKA LIJEKOVI---")
+                    print("---TABELA PODATAKA LIJEKOVI---")
                     operacija = ''
                     while operacija != '0':
                         operacija = input("DODAVANJE [1], BRISANJE[2], IZMJENA[3], ISPIS[4], IZLAZ[0]: ")
@@ -64,7 +64,7 @@ if __name__ == '__main__':
                                                                cijenabezpdv FLOAT, 
                                                                datum DATE
                                                            ); """
-                            conn = create_connection("lijekovi.db")  # create connection to lijekovi.db
+                            conn = create_connection("apoteke.db")  # create connection to lijekovi.db
                             if conn is not None:
                                 create_table(conn, sql_create_lijekovi_table)  # create table lijekovi
                                 tabela = 'lijekovi'
@@ -85,7 +85,7 @@ if __name__ == '__main__':
                                                                                                datum DATE
                                                                                                ); """
                                 # create a connection to lijekovi
-                                conn = create_connection("lijekovizaotpis.db")
+                                conn = create_connection("apoteke.db")
 
                                 if conn is not None:
                                     # create a table lijekovizaotpis
@@ -113,27 +113,26 @@ if __name__ == '__main__':
                             m = float(input("Unesite novu cijenu lijeka: "))
                             nnaziv = n.upper()
                             lijek.update_cijena(m, nnaziv)  # update lijek
-                            novacijena = m * 0.83
+                            novacijena = float(m * 0.83)
                             lijek.update_cijenabezpdv(novacijena, nnaziv)
 
                         elif operacija == '4':
                             print("ISPIS [4]")
-                            baza1 = 'lijekovi.db'
-                            baza2 = 'lijekovizaotpis.db'
+                            baza = 'apoteke.db'
                             tabela1 = 'lijekovi'
                             tabela2 = 'lijekovizaotpis'
                             print("TABELA LIJEKOVA: ")
                             print("ID - Naziv - Kolicina - Cijena(PDV) - Cijena - Datum")
-                            select.show_all(baza1, tabela1)  # select all from lijekovi.db
+                            select.show_all(baza, tabela1)  # select all from lijekovi.db
                             print("TABELA LIJEKOVA ZA OTPIS: ")
                             print("ID - Naziv - Kolicina - Cijena(PDV) - Cijena - Datum")
-                            select.show_all(baza2, tabela2)  # select all from lijekovizaotpis.db
+                            select.show_all(baza, tabela2)  # select all from lijekovizaotpis.db
                         elif operacija != '0':
                             print("Nepoznata komanda!")
-                    print("IZLAZ IZ BAZE PODATAKA LIJEKOVA")
+                    print("IZLAZ IZ TABELE PODATAKA LIJEKOVA")
 
                 elif pristup == '2':
-                    print("---BAZA PODATAKA RECEPTI---")
+                    print("---TABELA PODATAKA RECEPTI---")
                     operacija = ''
                     while operacija != '0':
                         operacija = input("DODAVANJE [1], BRISANJE[2], IZMJENA[3], ISPIS[4], IZLAZ[0]: ")
@@ -147,7 +146,7 @@ if __name__ == '__main__':
                                                                                         datumizdavanja DATE, 
                                                                                         nacinupotrebe VARCHAR(50)
                                                                                        ); """
-                            conn = create_connection("recepti.db")  # create connection to recepti.db
+                            conn = create_connection("apoteke.db")  # create connection to recepti.db
                             if conn is not None:
                                 create_table(conn, sql_create_recepti_table)
                                 recept1 = recept.Recept()
@@ -169,7 +168,7 @@ if __name__ == '__main__':
 
                         elif operacija == '4':
                             tabela = 'recepti'
-                            baza = 'recepti.db'
+                            baza = 'apoteke.db'
                             print("ISPIS[4]")
                             print("TABELA RECEPATA: ")
                             print("Br.recepta - Izdavac recepta - Pacijent - Lijek - Datum - Nacin upotrebe")
@@ -177,19 +176,19 @@ if __name__ == '__main__':
 
                         elif operacija != '0':
                             print("Nepoznata komanda! ")
-                    print("IZLAZ IZ BAZE PODATAKA RECEPATA!")
+                    print("IZLAZ IZ TABELE PODATAKA RECEPATA!")
                 else:
                     print("IZABERITE PRISTUP: ")
 
         elif ulaz == '2':
             print("Prijavljeni ste kao KNJIGOVODJA")
-            print("Imate pristup bazama podataka ZAPOSLENI [1] i APOTEKE [2]. IZLAZ [0]")
+            print("Imate pristup tabelama podataka ZAPOSLENI [1] i APOTEKE [2]. IZLAZ [0]: ")
             pristup = ''
 
             while pristup != '0':
-                pristup = input("Unesite komandu za pristup bazi ZAPOSLENI [1] i APOTEKE [2]. IZLAZ [0]: ")
+                pristup = input("Unesite komandu za pristup tabeli ZAPOSLENI [1] i APOTEKE [2]. IZLAZ [0]: ")
                 if pristup == '1':
-                    print("---BAZA PODATAKA ZAPOSLENI---")
+                    print("---TABELA PODATAKA ZAPOSLENI---")
                     operacija = ''
                     while operacija != '0':
                         operacija = input("DODAVANJE [1], BRISANJE[2], IZMJENA[3], ISPIS[4], IZLAZ[0]: ")
@@ -203,7 +202,7 @@ if __name__ == '__main__':
                                                                                         email VARCHAR(50), 
                                                                                         plata FLOAT
                                                                                         ); """
-                            conn = create_connection("zaposleni.db")  # create connection to zaposleni.db
+                            conn = create_connection("apoteke.db")  # create connection to zaposleni.db
 
                             if conn is not None:
                                 create_table(conn, sql_create_zaposleni_table)  # create table zaposleni
@@ -226,7 +225,7 @@ if __name__ == '__main__':
 
                         elif operacija == '4':
                             tabela = 'zaposleni'
-                            baza = 'zaposleni.db'
+                            baza = 'apoteke.db'
                             print("ISPIS[4]")
                             print("TABELA ZAPOSLENI: ")
                             print("ID - Ime - Prezime - Zvanje - Email - Plata")
@@ -234,10 +233,10 @@ if __name__ == '__main__':
 
                         elif operacija != '0':
                             print("Nepoznata komanda! ")
-                    print("IZLAZ IZ BAZE PODATAKA ZAPOSLENI")
+                    print("IZLAZ IZ TABELE PODATAKA ZAPOSLENI")
 
                 elif pristup == '2':
-                    print("---BAZA PODATAKA APOTEKE---")
+                    print("---TABELA PODATAKA APOTEKE---")
                     operacija = ''
                     while operacija != '0':
                         operacija = input("DODAVANJE [1], BRISANJE[2], IZMJENA[3], ISPIS[4], IZLAZ[0]: ")
@@ -280,7 +279,7 @@ if __name__ == '__main__':
 
                         elif operacija != '0':
                             print("Nepoznata komanda! ")
-                    print("IZLAZ IZ BAZE PODATAKA APOTEKE")
+                    print("IZLAZ IZ TABELE PODATAKA APOTEKE")
 
         elif ulaz != '0':
             print("NEPOZNATA KOMANDA!")
