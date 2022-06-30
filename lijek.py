@@ -44,7 +44,7 @@ def create_lijek(conn, lijek, tabela):
 
 
 def delete_lijek(lijek):
-    conn = sqlite3.connect('lijekovi.db')
+    conn = sqlite3.connect('apoteke.db')
     cursor = conn.cursor()
 
     cursor.execute("DELETE FROM lijekovi WHERE id = (?)", (lijek,))
@@ -54,7 +54,7 @@ def delete_lijek(lijek):
 
 
 def update_cijena(cijena, naziv):
-    conn = sqlite3.connect('lijekovi.db')
+    conn = sqlite3.connect('apoteke.db')
     cursor = conn.cursor()
 
     cursor.execute("UPDATE lijekovi SET cijenasapdv = (?) WHERE naziv = (?)", (cijena, naziv))
@@ -64,7 +64,7 @@ def update_cijena(cijena, naziv):
 
 
 def update_cijenabezpdv(cijena, naziv):
-    conn = sqlite3.connect('lijekovi.db')
+    conn = sqlite3.connect('apoteke.db')
     cursor = conn.cursor()
 
     cursor.execute("UPDATE lijekovi SET cijenabezpdv = (?) WHERE naziv = (?)", (cijena, naziv))
